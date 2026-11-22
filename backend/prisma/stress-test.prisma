@@ -1,0 +1,39 @@
+// Copy these models into the target application's prisma/schema.prisma.
+// They are extracted verbatim from the BlishCrown backend schema.
+
+model ObservabilityLog {
+  id        String   @id @default(uuid())
+  level     String
+  source    String
+  message   String
+  context   Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([level, createdAt(sort: Desc)])
+  @@index([source, createdAt(sort: Desc)])
+  @@index([createdAt(sort: Desc)])
+  @@map("observability_logs")
+}
+
+model StressTestRun {
+  id            String    @id @default(uuid())
+  status        String
+  target        String
+  duration      Int
+  concurrency   Int
+  startedAt     DateTime  @default(now()) @map("started_at")
+  completedAt   DateTime? @map("completed_at")
+  totalRequests Int       @default(0) @map("total_requests")
+  successful    Int       @default(0)
+  failed        Int       @default(0)
+  avgLatencyMs  Float?    @map("avg_latency_ms")
+  p95LatencyMs  Float?    @map("p95_latency_ms")
+  maxLatencyMs  Float?    @map("max_latency_ms")
+  errorRate     Float?    @map("error_rate")
+  result        Json?
+  requestedBy   String?   @map("requested_by")
+
+  @@index([status, startedAt(sort: Desc)])
+  @@index([startedAt(sort: Desc)])
+  @@map("stress_test_runs")
+}
