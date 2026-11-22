@@ -1,0 +1,16 @@
+{
+  "name": "browser-radar",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Standalone backend and browser dashboard for AI-assisted browser issue, error, performance, and security-event analysis.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

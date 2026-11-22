@@ -1,5 +1,6 @@
 node_modules/
 dist/
+browser-radar/data/
 .env
 .env.*
 !.env.example

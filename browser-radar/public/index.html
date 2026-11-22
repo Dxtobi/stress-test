@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Browser Radar</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">BR</span>
+        <div>
+          <h1>Browser Radar</h1>
+          <p>AI-assisted browser issue, performance &amp; security analysis</p>
+        </div>
+      </div>
+      <div class="status" id="status">
+        <span class="pill" id="aiStatus">AI: checking…</span>
+        <span class="pill" id="scanStatus">Scanner: checking…</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="stats" id="stats" aria-label="Overview"></section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Captured events</h2>
+            <p>Console, network, performance, action trail, DOM/screenshot, and security signals.</p>
+          </div>
+          <div class="toolbar">
+            <select id="categoryFilter" aria-label="Filter by category">
+              <option value="">All categories</option>
+              <option value="browser">Browser</option>
+              <option value="performance">Performance</option>
+              <option value="security">Security</option>
+            </select>
+            <input id="searchInput" type="search" placeholder="Search URL, message, source…" />
+            <button id="refreshBtn" type="button">Refresh</button>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="event-list" id="eventList" role="list">
+            <p class="empty">Loading events…</p>
+          </div>
+
+          <div class="event-detail" id="eventDetail">
+            <div class="empty">
+              <h3>Select an event</h3>
+              <p>Choose an event from the list to inspect its payload and run AI analysis.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="analysisPanel" hidden>
+        <div class="panel-head">
+          <div>
+            <h2>AI analysis</h2>
+            <p id="analysisMeta">Event: —</p>
+          </div>
+          <div class="toolbar">
+            <input id="modelInput" type="text" placeholder="Override model (optional)" />
+            <button id="analyzeBtn" type="button" class="primary">Analyze with AI</button>
+          </div>
+        </div>
+        <label class="full-input">
+          Focus question
+          <input id="questionInput" type="text" value="What caused this, how serious is it, and what should I do next?" />
+        </label>
+        <div id="analysisResult" class="analysis-result"><p class="empty">No analysis yet.</p></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Authorized security scan</h2>
+            <p>Opt-in active checks for localhost/private-network targets only.</p>
+          </div>
+        </div>
+        <form id="scanForm" class="scan-form">
+          <label>
+            Target URL
+            <input id="scanTarget" type="url" placeholder="http://localhost:3000" required />
+          </label>
+          <label class="check">
+            <input id="scanAuthorization" type="checkbox" />
+            I confirm I am authorized to test this target.
+          </label>
+          <button type="submit" class="danger" id="scanBtn">Run defensive scan</button>
+        </form>
+        <div id="scanResult" class="scan-result"><p class="empty">No scan run yet.</p></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Install the browser agent</h2>
+            <p>Add this to any page you want to monitor. The ingest token is low-privilege and should not be a dashboard/admin token.</p>
+          </div>
+          <button id="copySnippetBtn" type="button">Copy snippet</button>
+        </div>
+        <pre id="snippet"></pre>
+        <p class="note">
+          Screenshots require your own capture integration. Dispatch a <code>browser-radar:screenshot</code> CustomEvent with a
+          <code>dataUrl</code> detail, or call <code>window.BROWSER_RADAR.captureScreenshot(dataUrl)</code>.
+        </p>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

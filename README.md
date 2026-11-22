@@ -8,6 +8,17 @@ Standalone copy of the backend stress-test section extracted from the BlishCrown
 - `backend/prisma/` — the `StressTestRun` / `ObservabilityLog` Prisma models and the original migration SQL.
 - `admin-ui/StressTest.svelte` — the admin "Controlled stress test" section extracted into a standalone component with its history table.
 - `tools/load-pulse/` — the standalone browser-based Load Pulse / Ramp Test console served by the backend, plus its controller and rate-limit guard.
+- `browser-radar/` — a standalone backend + browser dashboard for AI-assisted error, performance, security-event, and authorized-scan analysis. See [browser-radar/README.md](browser-radar/README.md).
+
+## Browser Radar
+
+```bash
+cd browser-radar
+cp .env.example .env
+npm start
+```
+
+It runs at <http://127.0.0.1:4317> with no npm dependencies. Configure `AI_PROVIDER`, `AI_MODEL`, and `AI_API_KEY` for real analysis; OpenAI, Gemini, Anthropic, and OpenAI-compatible endpoints are supported.
 
 The server-side runner is intentionally conservative:
 
